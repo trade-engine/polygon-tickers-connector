@@ -1,27 +1,41 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
+    alias(libs.plugins.jvm.test.suite)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.spring.boot)
 }
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
     annotationProcessor(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     developmentOnly(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation(platform(libs.spring.cloud.dependencies))
 
     annotationProcessor(libs.spring.boot.configuration.processor)
 
     developmentOnly(libs.spring.boot.devtools)
 
+    implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactive)
+    implementation(libs.kotlinx.coroutines.reactor)
     implementation(libs.spring.boot.starter)
     implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.validation)
+    implementation(libs.spring.cloud.stream)
+    implementation(libs.spring.cloud.stream.binder.kafka)
+    implementation(libs.polygon.client)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.mockk)
 }
 
 java {
@@ -37,8 +51,12 @@ kotlin {
     }
 }
 
-testing.suites.getting(JvmTestSuite::class) {
-    useKotlinTest()
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useKotlinTest()
+        }
+    }
 }
 
 configurations {

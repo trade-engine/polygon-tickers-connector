@@ -1,3 +1,13 @@
 spring:
   application:
     name: polygon-tickers-connector
+  cloud:
+    stream:
+      kafka:
+        binder:
+          auto-create-topics: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:}
+application:
+  api:
+    key: ${POLYGON_API_KEY:}
