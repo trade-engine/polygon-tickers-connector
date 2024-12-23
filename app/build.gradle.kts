@@ -64,3 +64,14 @@ configurations {
         extendsFrom(configurations.annotationProcessor.get())
     }
 }
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    imageName = "ghcr.io/trade-engine/polygon-tickers-connector"
+    docker {
+        publishRegistry {
+            url = "ghcr.io"
+            username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+            password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
