@@ -5,7 +5,7 @@ kotlinx-coroutines = "1.10.1"
 spring-boot = "3.4.1"
 spring-cloud = "2024.0.0"
 
-mockk = "1.13.13"
+mockk = "1.13.14"
 
 polygon-client = "5.1.2"
 
